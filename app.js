@@ -20,9 +20,18 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-mongoose.connect('mongodb+srv://adityapandey3082004:'+process.env.PASSWORD+'@cluster0.sy335ht.mongodb.net/library');
-
+const db_URI=process.env.MONGO_URL
+const dbOptions = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  };
+mongoose.connect(db_URI,dbOptions)
+.then(()=>{
+    console.log("connected")
+})
+.catch((err)=>{
+    console.log(err)
+})
 const userSchema=new mongoose.Schema({
      username:String,
      password:String,
