@@ -69,7 +69,7 @@ app.route("/admin-registration")
     res.render("adminRegi")
 })
 .post((req,res)=>{
-    User.register({username:req.body.adminName},req.body.password,function(err,user){
+    User.register({username:req.body.username},req.body.password,function(err,user){
         if(err){
             console.log(err)
             res.redirect("/admin-registration")
