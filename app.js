@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express=require("express");
 const bodyparser=require("body-parser");
 const mongoose=require("mongoose");
@@ -12,7 +13,7 @@ app.use(express.static("public"));
 app.use(bodyparser.urlencoded({extended:true}));
 
 app.use(session({
-    secret:"this is library management portal.",
+    secret:process.env.SECRET,
     resave:false,
     saveUninitialized:true
 }))
@@ -20,8 +21,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect('mongodb://127.0.0.1:27017/library')
-// mongoose.set("useCreateIndex",true)
+mongoose.connect('mongodb+srv://adityapandey3082004:'+process.env.PASSWORD+'@cluster0.sy335ht.mongodb.net/library');
 
 const userSchema=new mongoose.Schema({
      username:String,
@@ -202,7 +202,6 @@ app.route("/user")
 })
 .post((req,res)=>{
     const formID=req.body.formID;
-    console.log(req.body.user)
     if (formID==="form1"){
         Book.findOne({name:req.body.bookName})
         .then((founditem)=>{
